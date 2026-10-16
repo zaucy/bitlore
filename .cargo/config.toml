@@ -1,0 +1,17 @@
+[build]
+rustflags = [
+    "--cfg", "tokio_unstable",
+    "-C", "force-unwind-tables=yes",
+    "-C", "force-frame-pointers=yes",
+    "--cfg", "uuid_unstable"
+]
+
+[target.x86_64-pc-windows-msvc]
+rustflags = [
+    "--cfg", "tokio_unstable",
+    "-C", "force-unwind-tables=yes",
+    "-C", "force-frame-pointers=yes",
+    "-C", "target-feature=+crt-static",
+    "-C", "split-debuginfo=packed",
+    "--cfg", "uuid_unstable"
+]

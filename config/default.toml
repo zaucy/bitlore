@@ -1,0 +1,35 @@
+# =============================================================================
+# Bitlore Server Default Configuration (Metadata-Only Hosting Engine)
+# =============================================================================
+# Bitlore hosts repository metadata, branches, locks, and structural Merkle tree
+# fragments (`State`, `Tree`, `NodeBlock`, `NameTable`, `Metadata`) while skipping
+# leaf file payloads (`!address.context.is_zero()`).
+#
+# Compatible with 100% unmodified vanilla `lore` CLI clients.
+
+[immutable_store]
+mode = "bitlore"
+
+[plugins.bitlore.immutable_store]
+# Leave `path` empty to use `<temp_dir>/bitlore-server/immutable`, or set an
+# explicit directory path for persistent hosting.
+path = ""
+flush_delay_seconds = 10
+store_file_payloads = false
+# Unary gRPC P2P tracker listener (`Announce`, `Resolve`, `Heartbeat`, and structural forwarding).
+tracker_bind_addr = "0.0.0.0:42340"
+peer_ttl_seconds = 120
+
+[mutable_store]
+mode = "local"
+
+[lock_store]
+mode = "local"
+
+# Optional: To redirect vanilla clients to a paid/external storage tier or P2P
+# storage gateway for leaf file payloads while keeping API/branches on Bitlore,
+# uncomment and configure `[environment.endpoint]`:
+#
+# [environment.endpoint]
+# api_url = "lore://127.0.0.1:41337"
+# storage_url = "quic://storage.bitlore.example.com:41337"
